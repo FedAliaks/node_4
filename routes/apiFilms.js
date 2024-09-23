@@ -52,6 +52,9 @@ filmRoutes.post("/delete", (req, res) => {
 });
 
 filmRoutes.post("/update", (req, res) => {
+  if (!checkUserSuperStatus(req, res)) {
+    res.status(403).send('Super status is incorrect')
+  }
   const { id, title, rating, year, budget, gross, poster, position } = req.body;
 
   fs.readFile(path.join(__dirname, "../movies.txt"), (err, data) => {
@@ -84,6 +87,9 @@ filmRoutes.get("/readall", (req, res) => {
 });
 
 filmRoutes.post("/create", (req, res) => {
+  if (!checkUserSuperStatus(req, res)) {
+    res.status(403).send('Super status is incorrect')
+  }
   const { id, title, rating, year, budget, gross, poster, position } = req.body;
   if (
     !id ||
