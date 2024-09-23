@@ -5,7 +5,7 @@ const {
   fixIdInArray,
   writeUpdateMovieArray,
   sortArray,
-  checkUserSuperStatus
+  checkUserSuperStatus,
 } = require("../helpers");
 
 const filmRoutes = express.Router();
@@ -17,17 +17,17 @@ filmRoutes.get("/read/:id", (req, res) => {
 
   fs.readFile(path.join(__dirname, "../movies.txt"), (err, data) => {
     const movieArr = JSON.parse(data.toString());
-    if (id > movieArr.length) res.status(500).send('request invalid')
+    if (id > movieArr.length) res.status(500).send("request invalid");
     const movie = movieArr.find((item) => item.id == id);
     res.status(200).send(movie);
   });
 });
 
 filmRoutes.post("/delete", (req, res) => {
-  console.log('delete');
-  
+  console.log("delete");
+
   if (!checkUserSuperStatus(req, res)) {
-    res.status(403).send('Super status is incorrect')
+    res.status(403).send("Super status is incorrect");
   }
 
   const {
@@ -36,7 +36,7 @@ filmRoutes.post("/delete", (req, res) => {
 
   fs.readFile(path.join(__dirname, "../movies.txt"), (err, data) => {
     const movieArr = JSON.parse(data.toString());
-    if (id < 1 || id > movieArr.length) res.status(500).send('request invalid')
+    if (id < 1 || id > movieArr.length) res.status(500).send("request invalid");
     const deleteMovie = movieArr[id - 1];
     const newArr = fixIdInArray([
       ...movieArr.slice(0, id - 1),
@@ -45,21 +45,17 @@ filmRoutes.post("/delete", (req, res) => {
 
     writeUpdateMovieArray(res, newArr, deleteMovie);
   });
-
-
-
-
 });
 
 filmRoutes.post("/update", (req, res) => {
   if (!checkUserSuperStatus(req, res)) {
-    res.status(403).send('Super status is incorrect')
+    res.status(403).send("Super status is incorrect");
   }
   const { id, title, rating, year, budget, gross, poster, position } = req.body;
 
   fs.readFile(path.join(__dirname, "../movies.txt"), (err, data) => {
     const movieArr = JSON.parse(data.toString());
-    if (id < 1 || id > movieArr.length) res.status(500).send('request invalid')
+    if (id < 1 || id > movieArr.length) res.status(500).send("request invalid");
     const movieForUpdate = movieArr.find((item) => item.id == id);
     const updateMovie = {
       id: id,
@@ -78,7 +74,7 @@ filmRoutes.post("/update", (req, res) => {
 });
 
 filmRoutes.get("/readall", (req, res) => {
-  console.log('readall')
+  console.log("readall");
   fs.readFile(path.join(__dirname, "../movies.txt"), (err, data) => {
     const movieArr = JSON.parse(data.toString());
     const sortedArr = sortArray(movieArr);
@@ -88,7 +84,7 @@ filmRoutes.get("/readall", (req, res) => {
 
 filmRoutes.post("/create", (req, res) => {
   if (!checkUserSuperStatus(req, res)) {
-    res.status(403).send('Super status is incorrect')
+    res.status(403).send("Super status is incorrect");
   }
   const { id, title, rating, year, budget, gross, poster, position } = req.body;
   if (

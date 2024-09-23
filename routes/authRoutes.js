@@ -6,7 +6,7 @@ const { users } = require("../users");
 const authRoutes = express.Router();
 
 authRoutes.post("/register", (req, res) => {
-    console.log('here')
+  console.log("here");
   const { email, password } = req.body;
 
   bcrypt.hash(password, 10, (err, hash) => {
