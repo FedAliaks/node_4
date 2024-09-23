@@ -4,8 +4,11 @@ const { users } = require("../users");
 
 const checkRoutes = express.Router();
 
-checkRoutes.get("", (req, res, next) => {
+checkRoutes.get("*", (req, res, next) => {
+console.log('here')
+console.log(req.headers)
   const authorizationHeader = req.headers.authorization;
+  console.log(authorizationHeader)
 
   if (!authorizationHeader) res.status(401).send("Token have not found");
 
@@ -21,6 +24,7 @@ checkRoutes.get("", (req, res, next) => {
     req.user = user;
     console.log("end of checkRoute");
     next();
+
   });
 });
 

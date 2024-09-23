@@ -64,6 +64,7 @@ filmRoutes.post("/update", (req, res) => {
 });
 
 filmRoutes.get("/readall", (req, res) => {
+  console.log('readall')
   fs.readFile(path.join(__dirname, "../movies.txt"), (err, data) => {
     const movieArr = JSON.parse(data.toString());
     const sortedArr = sortArray(movieArr);
