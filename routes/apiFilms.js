@@ -5,6 +5,7 @@ const {
   fixIdInArray,
   writeUpdateMovieArray,
   sortArray,
+  checkUserSuperStatus
 } = require("../helpers");
 
 const filmRoutes = express.Router();
@@ -23,6 +24,12 @@ filmRoutes.get("/read/:id", (req, res) => {
 });
 
 filmRoutes.post("/delete", (req, res) => {
+  console.log('delete');
+  
+  if (!checkUserSuperStatus(req, res)) {
+    res.status(403).send('Super status is incorrect')
+  }
+
   const {
     body: { id },
   } = req;
@@ -38,6 +45,10 @@ filmRoutes.post("/delete", (req, res) => {
 
     writeUpdateMovieArray(res, newArr, deleteMovie);
   });
+
+
+
+
 });
 
 filmRoutes.post("/update", (req, res) => {

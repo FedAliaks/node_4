@@ -36,8 +36,18 @@ function sortArray(arr) {
   return [...sortArray(left), pivot, ...sortArray(right)];
 }
 
+
+function checkUserSuperStatus(req, res) {
+  console.log('check status');
+  console.log(req.user)
+  return req.user.super
+
+}
+
+
 module.exports = {
   fixIdInArray,
   writeUpdateMovieArray,
   sortArray,
+  checkUserSuperStatus
 };
