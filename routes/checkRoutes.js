@@ -13,10 +13,7 @@ checkRoutes.post("*", (req, res, next) => {
 });
 
 function checkRouteFn(req, res, next) {
-  console.log("here");
-  console.log(req.headers);
   const authorizationHeader = req.headers.authorization;
-  console.log(authorizationHeader);
 
   if (!authorizationHeader) res.status(401).send("Token have not found");
 
@@ -30,7 +27,6 @@ function checkRouteFn(req, res, next) {
       }) || null;
     if (!user) res.status(403).send("User have not found");
     req.user = user;
-    console.log("end of checkRoute");
     next();
   });
 }

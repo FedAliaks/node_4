@@ -37,8 +37,6 @@ function sortArray(arr) {
 }
 
 function checkUserSuperStatus(req, res) {
-  console.log("check status");
-  console.log(req.user);
   return req.user.super;
 }
 
